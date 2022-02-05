@@ -8,11 +8,12 @@ import (
 	"net/http/pprof"
 	"os"
 
+	"github.com/yakushou730/ultimate-service-v3/foundation/web"
+
 	"github.com/yakushou730/ultimate-service-v3/app/services/sales-api/handlers/v1/testgrp"
 
 	"github.com/yakushou730/ultimate-service-v3/app/services/sales-api/handlers/debug/checkgrp"
 
-	"github.com/dimfeld/httptreemux/v5"
 	"go.uber.org/zap"
 )
 
@@ -59,14 +60,14 @@ type APIMuxConfig struct {
 }
 
 // APIMux constructs a http.Handler with all application routes defined.
-func APIMux(cfg APIMuxConfig) *httptreemux.ContextMux {
-	mux := httptreemux.NewContextMux()
+func APIMux(cfg APIMuxConfig) *web.App {
+	app := web.NewApp(cfg.Shutdown)
 
 	tgh := testgrp.Handlers{
 		Log: cfg.Log,
 	}
 
-	mux.Handle(http.MethodGet, "/v1/test", tgh.Test)
+	app.Handle(http.MethodGet, "/v1/test", tgh.Test)
 
-	return mux
+	return app
 }
