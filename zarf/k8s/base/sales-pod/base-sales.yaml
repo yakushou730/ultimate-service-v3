@@ -23,3 +23,25 @@ spec:
       containers:
       - name: sales-api
         image: sales-api-image
+        ports:
+          - name: sales-api
+            containerPort: 7000
+          - name: sales-api-debug
+            containerPort: 7001
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: sales-service
+  namespace: sales-system
+spec:
+  type: ClusterIP
+  selector:
+    app: sales
+  ports:
+    - name: sales-api
+      port: 7000
+      targetPort: sales-api
+    - name: sales-api-debug
+      port: 7001
+      targetPort: sales-api-debug

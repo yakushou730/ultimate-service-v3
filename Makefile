@@ -1,5 +1,11 @@
 SHELL := /bin/bash
 
+# ============================================================
+# Testing
+
+# expvarmon -ports=":7001" -vars="build,requests,goroutines,errors,panics,mem:memstats.Alloc"
+
+# ============================================================
 run:
 	go run app/services/sales-api/main.go
 
