@@ -8,6 +8,8 @@ import (
 	"net/http/pprof"
 	"os"
 
+	"github.com/yakushou730/ultimate-service-v3/business/web/mid"
+
 	"github.com/yakushou730/ultimate-service-v3/foundation/web"
 
 	"github.com/yakushou730/ultimate-service-v3/app/services/sales-api/handlers/v1/testgrp"
@@ -65,6 +67,7 @@ func APIMux(cfg APIMuxConfig) *web.App {
 	// Construct the web.App which holds all routes as well as common middleware
 	app := web.NewApp(
 		cfg.Shutdown,
+		mid.Logger(cfg.Log),
 	)
 
 	// Load the routes for the different versions of the API.
